@@ -23,6 +23,11 @@ const Profile = () => {
     });
     DataStore.save(newClub);
     setClubName('');
+    setClubEmail('');
+    setClubPhone('');
+    setClubLocation('');
+    setClubWebsite('');
+    setClubTeams('');
   };
   console.log('MODELS HERE', models);
 
