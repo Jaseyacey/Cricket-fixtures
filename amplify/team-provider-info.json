@@ -10,6 +10,11 @@
       "StackName": "amplify-cricfix-staging-111724",
       "StackId": "arn:aws:cloudformation:us-east-1:706420983314:stack/amplify-cricfix-staging-111724/9a89bcf0-cf89-11ec-9ec9-0ebd06d1011d",
       "AmplifyAppId": "d1hbcqx2se4het"
+    },
+    "categories": {
+      "auth": {
+        "CricFix": {}
+      }
     }
   }
 }
