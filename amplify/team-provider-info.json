@@ -1,0 +1,26 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cricfix-staging-111123-authRole",
+      "UnauthRoleArn": "arn:aws:iam::703494534116:role/amplify-cricfix-staging-111123-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::703494534116:role/amplify-cricfix-staging-111123-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-cricfix-staging-111123-deployment",
+      "UnauthRoleName": "amplify-cricfix-staging-111123-unauthRole",
+      "StackName": "amplify-cricfix-staging-111123",
+      "StackId": "arn:aws:cloudformation:eu-west-2:703494534116:stack/amplify-cricfix-staging-111123/42a1a040-d1e4-11ec-a9c8-06e5bbc9b20e",
+      "AmplifyAppId": "d3jci7bqhv8gaa"
+    },
+    "categories": {
+      "auth": {
+        "CricFix": {}
+      },
+      "function": {
+        "AdminQueriesf32859d1": {
+          "deploymentBucketName": "amplify-cricfix-staging-111123-deployment",
+          "s3Key": "amplify-builds/AdminQueriesf32859d1-73326763493936634a67-build.zip"
+        }
+      }
+    }
+  }
+}

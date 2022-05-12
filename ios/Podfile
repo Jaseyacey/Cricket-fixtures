@@ -19,6 +19,8 @@ target 'cricfix' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'RNAWSCognito', :path => '../node_modules/amazon-cognito-identity-js'
+
   target 'cricfixTests' do
     inherit! :complete
     # Pods for testing

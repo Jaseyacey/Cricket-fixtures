@@ -28,13 +28,13 @@ const Profile = () => {
     setClubLocation('');
     setClubWebsite('');
     setClubTeams('');
+    console.log('MODELS HERE', models);
   };
-  console.log('MODELS HERE', models);
 
   return (
     <Container>
       <Header>
-        <LargeHeader>Club Profile</LargeHeader>
+        <LargeHeader>Register</LargeHeader>
         {/*  CLUB NAME */}
         <Input
           placeholder="Enter your name"

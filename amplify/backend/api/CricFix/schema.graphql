@@ -1,0 +1,9 @@
+type ClubProfile @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  club_email: AWSEmail
+  club_name: String
+  club_number: String
+  club_description: String
+  club_website: AWSURL
+  club_teams: AWSJSON
+}
