@@ -4,20 +4,20 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
-type CricketClubMetaData = {
+type ClubProfileMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-export declare class CricketClub {
+export declare class ClubProfile {
   readonly id: string;
-  readonly club_name?: string | null;
-  readonly club_location?: string | null;
-  readonly club_contact?: string | null;
-  readonly club_website?: string | null;
   readonly club_email?: string | null;
+  readonly club_name?: string | null;
+  readonly club_number?: string | null;
+  readonly club_description?: string | null;
+  readonly club_website?: string | null;
   readonly club_teams?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  constructor(init: ModelInit<CricketClub, CricketClubMetaData>);
-  static copyOf(source: CricketClub, mutator: (draft: MutableModel<CricketClub, CricketClubMetaData>) => MutableModel<CricketClub, CricketClubMetaData> | void): CricketClub;
+  constructor(init: ModelInit<ClubProfile, ClubProfileMetaData>);
+  static copyOf(source: ClubProfile, mutator: (draft: MutableModel<ClubProfile, ClubProfileMetaData>) => MutableModel<ClubProfile, ClubProfileMetaData> | void): ClubProfile;
 }

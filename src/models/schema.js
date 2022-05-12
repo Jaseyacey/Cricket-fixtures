@@ -1,13 +1,20 @@
 export const schema = {
     "models": {
-        "CricketClub": {
-            "name": "CricketClub",
+        "ClubProfile": {
+            "name": "ClubProfile",
             "fields": {
                 "id": {
                     "name": "id",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
+                    "attributes": []
+                },
+                "club_email": {
+                    "name": "club_email",
+                    "isArray": false,
+                    "type": "AWSEmail",
+                    "isRequired": false,
                     "attributes": []
                 },
                 "club_name": {
@@ -17,15 +24,15 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "club_location": {
-                    "name": "club_location",
+                "club_number": {
+                    "name": "club_number",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
-                "club_contact": {
-                    "name": "club_contact",
+                "club_description": {
+                    "name": "club_description",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -35,13 +42,6 @@ export const schema = {
                     "name": "club_website",
                     "isArray": false,
                     "type": "AWSURL",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "club_email": {
-                    "name": "club_email",
-                    "isArray": false,
-                    "type": "AWSEmail",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -70,7 +70,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "CricketClubs",
+            "pluralName": "ClubProfiles",
             "attributes": [
                 {
                     "type": "model",
@@ -97,5 +97,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "7cee25212821d0652c1175dad0082693"
+    "version": "268ea7f5a9891bb86c325e34652e4408"
 };

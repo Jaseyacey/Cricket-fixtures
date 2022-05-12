@@ -4,8 +4,8 @@ import { schema } from './schema';
 
 
 
-const { CricketClub } = initSchema(schema);
+const { ClubProfile } = initSchema(schema);
 
 export {
-  CricketClub
+  ClubProfile
 };

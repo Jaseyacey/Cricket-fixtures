@@ -2,36 +2,29 @@ import React, {useState} from 'react';
 import styled from 'styled-components';
 import {Auth} from 'aws-amplify';
 
-const SignUp = ({navigation}) => {
-  const [email, setEmail] = useState('');
+const SignIn = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [phone_number, setPhone_number] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
   /* Sign up function */
-  async function registerUser() {
+  async function signInUser() {
     try {
-      await Auth.signUp({
+      await Auth.signIn({
         username: username,
         password: password,
-        attributes: {
-          email: email,
-          phone_number: phone_number,
-        },
       });
-      console.log('User signed up');
-      navigation.navigate('PinCode');
+      console.log('User signed in');
+      navigation.navigate('Profile');
     } catch (err) {
       console.log({err});
     }
   }
   const handleSubmit = () => {
-    registerUser();
+    signInUser();
   };
   return (
     <>
       <Container>
-        <LargeHeader>Sign Up</LargeHeader>
+        <LargeHeader>Sign In</LargeHeader>
         <FormInput>
           <Input
             placeholder="Enter your username"
@@ -40,25 +33,9 @@ const SignUp = ({navigation}) => {
             onValueChange={models => setUsername(username)}
           />
           <Input
-            placeholder="Enter your email"
-            value={email}
-            onChangeText={text => setEmail(text)}
-            onValueChange={models => setEmail(email)}
-          />
-          <Input
             placeholder="Enter your password"
             value={password}
             onChangeText={text => setPassword(text)}
-          />
-          <Input
-            placeholder="Repeat your password"
-            value={repeatPassword}
-            onChangeText={text => setRepeatPassword(text)}
-          />
-          <Input
-            placeholder="Enter your phone number"
-            value={phone_number}
-            onChangeText={text => setPhone_number(text)}
           />
         </FormInput>
         <ButtonBox>
@@ -71,7 +48,7 @@ const SignUp = ({navigation}) => {
   );
 };
 
-export default SignUp;
+export default SignIn;
 
 const Container = styled.View`
   flex: 1;
