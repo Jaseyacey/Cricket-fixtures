@@ -18,6 +18,11 @@ const SignIn = ({navigation}) => {
       console.log({err});
     }
   }
+  const forgotPassword = () => {
+    Auth.forgotPassword(username)
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
+  };
   const handleSubmit = () => {
     signInUser();
   };
@@ -38,9 +43,10 @@ const SignIn = ({navigation}) => {
             onChangeText={text => setPassword(text)}
           />
         </FormInput>
+        <SmallText onPress={forgotPassword}>Forgot Password</SmallText>
         <ButtonBox>
           <Button onPress={handleSubmit}>
-            <ButtonText>Sign Up</ButtonText>
+            <ButtonText>Sign In</ButtonText>
           </Button>
         </ButtonBox>
       </Container>
@@ -94,4 +100,13 @@ const ButtonText = styled.Text`
   font-size: 20px;
   font-weight: bold;
   align-self: center;
+`;
+const SmallText = styled.Text`
+  font-size: 15px;
+  text-align: center;
+  margin-top: 10px;
+  color: #000;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
 `;

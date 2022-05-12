@@ -18,7 +18,7 @@
       "function": {
         "AdminQueriesf32859d1": {
           "deploymentBucketName": "amplify-cricfix-staging-111123-deployment",
-          "s3Key": "amplify-builds/AdminQueriesf32859d1-73326763493936634a67-build.zip"
+          "s3Key": "amplify-builds/AdminQueriesf32859d1-4f6e6d694d7179586137-build.zip"
         }
       }
     }

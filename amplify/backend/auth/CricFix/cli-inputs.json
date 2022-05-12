@@ -58,6 +58,7 @@
     },
     "breakCircularDependency": true,
     "dependsOn": [],
-    "adminQueryGroup": "userRegister"
+    "adminQueryGroup": "userRegister",
+    "hostedUI": false
   }
 }

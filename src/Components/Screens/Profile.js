@@ -1,40 +1,40 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import {DataStore} from '@aws-amplify/datastore';
-import {CricketClub} from '../../models';
+import {ClubProfile} from '../../models/index';
 
-const models = DataStore.query(CricketClub);
-console.log('MODELS HERE', models);
-
-const Profile = () => {
+const Profile = ({navigation}) => {
   const [clubName, setClubName] = useState('');
   const [clubEmail, setClubEmail] = useState('');
   const [clubPhone, setClubPhone] = useState('');
   const [clubLocation, setClubLocation] = useState('');
   const [clubWebsite, setClubWebsite] = useState('');
-  const [clubTeams, setClubTeams] = useState('');
+  const [clubTeams, setClubTeams] = useState({});
+  const [clubDescription, setClubDescription] = useState('');
+  async function getClubInfo() {
+    await DataStore.save(
+      new ClubProfile({
+        club_email: clubEmail,
+        club_name: clubName,
+        club_number: clubPhone,
+        club_description: clubDescription,
+        club_website: clubWebsite,
+        // club_teams: clubTeams,
+      }),
+    );
+  }
   const handleSubmit = () => {
-    const newClub = new CricketClub({
-      name: clubName,
-      email: clubEmail,
-      location: clubLocation,
-      phone: clubPhone,
-      website: clubWebsite,
-    });
-    DataStore.save(newClub);
-    setClubName('');
-    setClubEmail('');
-    setClubPhone('');
-    setClubLocation('');
-    setClubWebsite('');
-    setClubTeams('');
-    console.log('MODELS HERE', models);
+    getClubInfo();
+    navigation.navigate('Home');
   };
 
+  
   return (
     <Container>
       <Header>
         <LargeHeader>Register</LargeHeader>
+      </Header>
+      <FormBox>
         {/*  CLUB NAME */}
         <Input
           placeholder="Enter your name"
@@ -42,6 +42,7 @@ const Profile = () => {
           onChangeText={text => setClubName(text)}
           onValueChange={models => setClubName(clubName)}
         />
+
         {/*  CLUB EMAIL */}
         <Input
           placeholder="Enter your email"
@@ -77,12 +78,20 @@ const Profile = () => {
           onChangeText={text => setClubTeams(text)}
           onValueChange={models => setClubTeams(clubTeams)}
         />
-        <ButtonBox>
-          <Button onPress={handleSubmit}>
-            <ButtonText>Save</ButtonText>
-          </Button>
-        </ButtonBox>
-      </Header>
+        {/*  CLUB DESCRIPTION */}
+        <Input
+          placeholder="Enter description"
+          value={clubDescription}
+          multiline={true}
+          onChangeText={text => setClubDescription(text)}
+          onValueChange={models => setClubDescription(clubDescription)}
+        />
+      </FormBox>
+      <ButtonBox>
+        <Button onPress={handleSubmit}>
+          <ButtonText>Save</ButtonText>
+        </Button>
+      </ButtonBox>
     </Container>
   );
 };
@@ -93,7 +102,7 @@ const Container = styled.View`
   flex: 1;
 `;
 const Header = styled.View`
-  flex: 1;
+  flex: 0.2;
   justify-content: center;
   align-items: center;
   background-color: #f5fcff;
@@ -102,6 +111,17 @@ const LargeHeader = styled.Text`
   font-size: 30px;
   font-weight: bold;
 `;
+const FormBox = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5fcff;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+`;
+
 const Input = styled.TextInput`
   border-color: #000;
   border-width: 1px;
@@ -111,6 +131,7 @@ const Input = styled.TextInput`
   width: 200px;
 `;
 const ButtonBox = styled.View`
+  flex: 0.2;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -120,10 +141,12 @@ const Button = styled.TouchableOpacity`
   background-color: #000;
   padding: 10px;
   border-radius: 5px;
+  width: 80%;
   margin-right: 10px;
 `;
 const ButtonText = styled.Text`
   color: #fff;
   font-size: 20px;
+  align-self: center;
   font-weight: bold;
 `;
