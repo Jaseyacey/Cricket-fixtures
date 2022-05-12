@@ -41,7 +41,9 @@ export const schema = {
                 "club_website": {
                     "name": "club_website",
                     "isArray": false,
-                    "type": "AWSURL",
+                    "type": {
+                        "nonModel": "Teams"
+                    },
                     "isRequired": false,
                     "attributes": []
                 },
@@ -96,6 +98,19 @@ export const schema = {
         }
     },
     "enums": {},
-    "nonModels": {},
-    "version": "268ea7f5a9891bb86c325e34652e4408"
+    "nonModels": {
+        "Teams": {
+            "name": "Teams",
+            "fields": {
+                "Teams": {
+                    "name": "Teams",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                }
+            }
+        }
+    },
+    "version": "ed4c8076f4323837fed69b0cf0cab084"
 };

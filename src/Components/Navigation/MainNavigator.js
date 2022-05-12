@@ -6,6 +6,7 @@ import SplashScreen from '../Screens/SplashScreen';
 import SignUp from '../Screens/SignUp';
 import PinCode from '../Screens/PinCode';
 import SignIn from '../Screens/SignIn';
+import Home from '../Screens/Home';
 
 const Stack = createStackNavigator();
 const MainNavigator = () => {
@@ -19,6 +20,7 @@ const MainNavigator = () => {
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="PinCode" component={PinCode} />
         <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );
