@@ -88,5 +88,12 @@
         }
       ]
     }
+  },
+  "storage": {
+    "s3cricfixuserteams": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
   }
 }

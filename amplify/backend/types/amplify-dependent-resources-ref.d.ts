@@ -29,5 +29,11 @@ export type AmplifyDependentResourcesAttributes = {
             "Region": "string",
             "LambdaExecutionRole": "string"
         }
+    },
+    "storage": {
+        "s3cricfixuserteams": {
+            "BucketName": "string",
+            "Region": "string"
+        }
     }
 }
