@@ -1,22 +1,36 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
+import {Auth} from 'aws-amplify';
+import {customerUuid} from '../Redux/Actions/actions';
+import {useDispatch} from 'react-redux';
 
 const SplashScreen = ({navigation}) => {
-  setTimeout(() => {
-    navigation.navigate('SignUp');
-  }, 3000);
+  // check if user is signed in
+  const [userUuid, setUserUuid] = useState('');
+  const dispatch = useDispatch();
+  async function checkUser() {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      console.log('user info at sign up', user.attributes.sub);
+      dispatch(customerUuid(user.attributes.sub));
+      navigation.navigate('Home');
+    } catch (err) {
+      console.log('err', err);
+      navigation.navigate('SignUp');
+    }
+  }
+
+  useEffect(() => {
+    checkUser();
+  }, []);
 
   return (
     <>
       <Container>
-          <Header>
-        <LargeHeader>SplashScreen</LargeHeader>
+        <Header>
+          <LargeHeader>SplashScreen</LargeHeader>
         </Header>
-        <FormInput>
-            <Input
-            placeholder="Enter your name"
-            />
-        </FormInput>
+        <FormInput />
       </Container>
     </>
   );
@@ -37,22 +51,22 @@ const LargeHeader = styled.Text`
   margin-left: 20px;
 `;
 const FormInput = styled.View`
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    background-color: #f5fcff;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5fcff;
 `;
 const Input = styled.TextInput`
-    border-color: #000;
-    border-width: 1px;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
-    width: 200px;
+  border-color: #000;
+  border-width: 1px;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  width: 200px;
 `;
 const Header = styled.View`
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    background-color: #f5fcff;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5fcff;
 `;

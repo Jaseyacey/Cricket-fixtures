@@ -13,7 +13,7 @@ const MainNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SignIn"
+        initialRouteName="SplashScreen"
         screenOptions={{headerShown: false, gestureEnabled: false}}>
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="SplashScreen" component={SplashScreen} />

@@ -10,10 +10,12 @@ const Profile = ({navigation}) => {
   const [clubLocation, setClubLocation] = useState('');
   const [clubWebsite, setClubWebsite] = useState('');
   const [clubTeams, setClubTeams] = useState({});
+  const [userUuid, setUserUuid] = useState('');
   const [clubDescription, setClubDescription] = useState('');
   async function getClubInfo() {
     await DataStore.save(
       new ClubProfile({
+        id: userUuid,
         club_email: clubEmail,
         club_name: clubName,
         club_number: clubPhone,

@@ -11,7 +11,7 @@ const PinCode = ({navigation}) => {
     try {
       await Auth.confirmSignUp(username, pinCode);
       console.log('User signed up');
-      navigation.navigate('Profile');
+      navigation.navigate('SignIn');
     } catch (err) {
       console.log({err});
     }

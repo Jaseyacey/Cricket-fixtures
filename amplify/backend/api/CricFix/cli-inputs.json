@@ -3,7 +3,7 @@
   "serviceConfiguration": {
     "apiName": "CricFix",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "/tmp/amplify-fc0c25f5-9455-435a-9ed6-e5879d9a1d4b/amplify/backend/api/CricFix/schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-eb8d11bc-f929-4c5b-8714-5792c668fb56/amplify/backend/api/CricFix/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
       "keyDescription": "api key description",
@@ -12,6 +12,10 @@
     "additionalAuthTypes": [
       {
         "mode": "AWS_IAM"
+      },
+      {
+        "mode": "AMAZON_COGNITO_USER_POOLS",
+        "cognitoUserPoolId": "authCricFix"
       }
     ],
     "conflictResolution": {
