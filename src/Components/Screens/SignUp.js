@@ -8,6 +8,7 @@ const SignUp = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [phone_number, setPhone_number] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+  const [isValid, setIsValid] = useState(false);
   /* Sign up function */
   async function registerUser() {
     try {
@@ -22,6 +23,7 @@ const SignUp = ({navigation}) => {
       console.log('User signed up');
       navigation.navigate('PinCode');
     } catch (err) {
+      alert(err.message);
       console.log({err});
     }
   }
@@ -38,22 +40,26 @@ const SignUp = ({navigation}) => {
             value={username}
             onChangeText={text => setUsername(text)}
             onValueChange={models => setUsername(username)}
+            setIsValid={true}
           />
           <Input
             placeholder="Enter your email"
             value={email}
             onChangeText={text => setEmail(text)}
             onValueChange={models => setEmail(email)}
+            setIsValid={true}
           />
           <Input
             placeholder="Enter your password"
             value={password}
             onChangeText={text => setPassword(text)}
+            setIsValid={true}
           />
           <Input
             placeholder="Repeat your password"
             value={repeatPassword}
             onChangeText={text => setRepeatPassword(text)}
+            setIsValid={true}
           />
           <Input
             placeholder="Enter your phone number"
