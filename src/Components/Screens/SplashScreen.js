@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {Auth} from 'aws-amplify';
-import {customerUuid} from '../Redux/Actions/actions';
+import {customerInfo} from '../Redux/Actions/actions';
 import {useDispatch} from 'react-redux';
 
 const SplashScreen = ({navigation}) => {
@@ -12,7 +12,7 @@ const SplashScreen = ({navigation}) => {
     try {
       const user = await Auth.currentAuthenticatedUser();
       console.log('user info at sign up', user.attributes.sub);
-      dispatch(customerUuid(user.attributes.sub));
+      dispatch(customerInfo(user));
       navigation.navigate('Home');
     } catch (err) {
       console.log('err', err);
@@ -20,9 +20,9 @@ const SplashScreen = ({navigation}) => {
     }
   }
 
-  useEffect(() => {
+  setTimeout(() => {
     checkUser();
-  }, []);
+  }, 5000);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import {USER_UUID} from '../Constants/constants';
+import {USER_UUID, USER_INFO} from '../Constants/constants';
 
 const initialState = {
   customerUuid: '',
@@ -10,6 +10,11 @@ const userProfile = (state = initialState, action) => {
       return {
         ...state,
         customerUuid: action.payload.customerUuid,
+      };
+    case USER_INFO:
+      return {
+        ...state,
+        customerInfo: action.payload.customerInfo,
       };
     default:
       return state;
