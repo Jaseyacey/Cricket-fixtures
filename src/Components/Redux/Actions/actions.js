@@ -7,6 +7,11 @@ export function customerUuid(customerUuid) {
     payload: {
       customerUuid: customerUuid,
     },
+  };
+}
+
+export function customerInfo(customerInfo) {
+  return {
     type: USER_INFO,
     payload: {
       customerInfo: customerInfo,
