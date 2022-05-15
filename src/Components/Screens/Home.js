@@ -6,20 +6,21 @@ import {useDispatch, useSelector} from 'react-redux';
 
 const Home = () => {
   // get redux store data
-  const currentUser = useSelector(state => state.userProfile);
+  const customerInfo = useSelector(state => state.userProfile);
   const dispatch = useDispatch();
-  
+
   // query the data store for the current user
   setTimeout(() => {
-    console.log('userUuid', currentUser);
-    
+    console.log('userUuid here!!!!!', customerInfo.customerInfo.username);
   }, 1000);
-  const clubName = currentUser.customerUuid;
+  const clubName = customerInfo.customerInfo.username;
   return (
     <Container>
       <Header>
         <LargeHeader>Welcome {clubName}</LargeHeader>
       </Header>
+      <Body>
+      </Body>
     </Container>
   );
 };

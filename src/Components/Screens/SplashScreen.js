@@ -11,7 +11,7 @@ const SplashScreen = ({navigation}) => {
   async function checkUser() {
     try {
       const user = await Auth.currentAuthenticatedUser();
-      console.log('user info at sign up', user.attributes.sub);
+      console.log('user info at sign up', user);
       dispatch(customerInfo(user));
       navigation.navigate('Home');
     } catch (err) {
