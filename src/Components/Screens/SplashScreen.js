@@ -22,7 +22,7 @@ const SplashScreen = ({navigation}) => {
 
   setTimeout(() => {
     checkUser();
-  }, 5000);
+  }, 2000);
 
   return (
     <>

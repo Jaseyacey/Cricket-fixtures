@@ -7,6 +7,7 @@ import SignUp from '../Screens/SignUp';
 import PinCode from '../Screens/PinCode';
 import SignIn from '../Screens/SignIn';
 import Home from '../Screens/Home';
+import Settings from '../Screens/Settings';
 
 const Stack = createStackNavigator();
 const MainNavigator = () => {
@@ -21,6 +22,7 @@ const MainNavigator = () => {
         <Stack.Screen name="PinCode" component={PinCode} />
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>
   );
