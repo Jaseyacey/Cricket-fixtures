@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {Auth} from 'aws-amplify';
+import {Auth, DataStore} from 'aws-amplify';
 import {customerInfo} from '../Redux/Actions/actions';
 import {useDispatch} from 'react-redux';
 
@@ -11,7 +11,9 @@ const SplashScreen = ({navigation}) => {
   async function checkUser() {
     try {
       const user = await Auth.currentAuthenticatedUser();
+      const userInfo = user;
       console.log('user info at sign up', user);
+      console.log('games info at sign up', userInfo);
       dispatch(customerInfo(user));
       navigation.navigate('Home');
     } catch (err) {

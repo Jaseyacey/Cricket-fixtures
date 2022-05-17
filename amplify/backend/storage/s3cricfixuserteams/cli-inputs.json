@@ -2,8 +2,10 @@
   "resourceName": "s3cricfixuserteams",
   "bucketName": "cric-fix-user-teams",
   "policyUUID": "569b7877",
-  "storageAccess": "auth",
-  "guestAccess": [],
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
   "authAccess": [
     "READ",
     "CREATE_AND_UPDATE",
