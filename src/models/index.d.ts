@@ -7,8 +7,25 @@ export declare class Teams {
   constructor(init: ModelInit<Teams>);
 }
 
+type AddFixturesMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type ClubProfileMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+export declare class AddFixtures {
+  readonly id: string;
+  readonly home_team?: string | null;
+  readonly away_team?: string | null;
+  readonly fixture_date?: string | null;
+  readonly fixture_time?: string | null;
+  readonly fixture_location?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<AddFixtures, AddFixturesMetaData>);
+  static copyOf(source: AddFixtures, mutator: (draft: MutableModel<AddFixtures, AddFixturesMetaData>) => MutableModel<AddFixtures, AddFixturesMetaData> | void): AddFixtures;
 }
 
 export declare class ClubProfile {

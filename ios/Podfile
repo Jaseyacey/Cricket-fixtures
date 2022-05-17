@@ -21,6 +21,8 @@ target 'cricfix' do
 
   pod 'RNAWSCognito', :path => '../node_modules/amazon-cognito-identity-js'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'cricfixTests' do
     inherit! :complete
     # Pods for testing
