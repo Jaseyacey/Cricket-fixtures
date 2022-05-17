@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
-import {DataStore} from 'aws-amplify';
-import {ClubProfile} from '../../models';
 import styled from 'styled-components';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import moment from 'moment';
@@ -12,17 +10,21 @@ import {Modal, Portal, Text, Button, Provider} from 'react-native-paper';
 const Home = ({navigation}) => {
   // modal visible
   const [modalVisible, setModalVisible] = React.useState(false);
-  const showModalFixtures = {
-    visible: modalVisible,
-  };
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
-  const [modalDate, setModalDate] = useState('');
-  const fixtureDate = modalDate.day;
-  console.log('modalDate', modalDate.day);
+  // declare a gllobal variable to store the selected date
+  const [selectedDate, setSelectedDate] = useState('');
+  // set the selected date
+  const onDayPress = day => {
+    setSelectedDate(day.day);
+    console.log('selected day', day);
+    showModal();
+  };
+  console.log('selected date', selectedDate);
   const containerStyle = {
     backgroundColor: '#f5fcff',
     padding: 20,
+    height: '90%',
     borderRadius: 10,
     borderColor: '#000',
     borderWidth: 1,
@@ -33,13 +35,13 @@ const Home = ({navigation}) => {
     shadowColor: '#000',
   };
   // set todays date with moment
-  const today = moment().format('YYYY-MM-DD');
+  const today = moment().format('YYYY-MM-');
   // get redux store data
   const customerInfo = useSelector(state => state.userProfile);
   const dispatch = useDispatch();
   // query the data store for the current user
   setTimeout(() => {
-    console.log('userUuid here!!!!!', customerInfo.customerInfo.username);
+    console.log('customerInfo', customerInfo);
   }, 1000);
   const clubName = customerInfo.customerInfo.username;
   return (
@@ -50,8 +52,22 @@ const Home = ({navigation}) => {
         </Header>
         <CalendarBox>
           {/* // add a calendar here */}
-          <Calendar current={today} onDayPress={setModalDate} />
+          <Calendar current={today} onDayPress={onDayPress} />
         </CalendarBox>
+ 
+        <Provider>
+          <Portal>
+            <Modal
+              visible={modalVisible}
+              onDismiss={hideModal}
+              contentContainerStyle={containerStyle}>
+              <Text>Fixtures on the {selectedDate}</Text>
+              <Button mode="contained" onPress={hideModal}>
+                Close
+              </Button>
+            </Modal>
+          </Portal>
+        </Provider>
         <AddFixtures>
           <MenuRow>
             <Icon
@@ -76,9 +92,6 @@ const Home = ({navigation}) => {
               onPress={() => navigation.navigate('Settings')}
             />
           </MenuRow>
-          <Buttons>
-            <Button onPress={showModal}>View Fixtures</Button>
-          </Buttons>
           <TextRow>
             <TinyText>Fixtures</TinyText>
             <TinyText>Chat</TinyText>
@@ -87,19 +100,6 @@ const Home = ({navigation}) => {
           </TextRow>
         </AddFixtures>
       </Container>
-      <Provider>
-        <Portal>
-          <Modal
-            visible={modalVisible}
-            onDismiss={hideModal}
-            contentContainerStyle={containerStyle}>
-            <Text>Hello {fixtureDate}</Text>
-            <Button mode="contained" onPress={hideModal}>
-              Close
-            </Button>
-          </Modal>
-        </Portal>
-      </Provider>
     </>
   );
 };
@@ -112,7 +112,7 @@ const Container = styled.View`
 `;
 
 const Header = styled.View`
-  flex: 0.2;
+  flex: 1.2;
   justify-content: center;
   align-items: center;
   background-color: #f5fcff;
@@ -123,20 +123,21 @@ const LargeHeader = styled.Text`
 `;
 
 const CalendarBox = styled.View`
-  flex: 0.8;
+  flex: 1.8;
   width: 100%;
   background-color: #f5fcff;
   opacity: 0.8;
 `;
 
 const AddFixtures = styled.View`
-  flex: 0.2;
+  flex: 1.2;
   justify-content: center;
   align-items: center;
   background-color: #f5fcff;
   margin-top: 20px;
 `;
 const MenuRow = styled.View`
+  flex: 1;
   flex-direction: row;
   justify-content: space-around;
   align-items: flex-end;
@@ -144,6 +145,7 @@ const MenuRow = styled.View`
   margin-top: 20px;
 `;
 const TextRow = styled.View`
+  flex: 1;
   flex-direction: row;
   justify-content: space-around;
   align-items: flex-start;
@@ -155,9 +157,10 @@ const TinyText = styled.Text`
   font-weight: bold;
 `;
 const Buttons = styled.View`
+  flex: 1;
   flex-direction: row;
-  justify-content: space-around;  
-  align-items: center;
+  justify-content: space-around;
+  align-items: flex-end;
   width: 100%;
   margin-top: 20px;
   margin-bottom: 20px;
