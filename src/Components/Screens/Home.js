@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import {useDispatch, useSelector} from 'react-redux';
@@ -6,6 +7,7 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import moment from 'moment';
 // import react native paper
 import {Modal, Portal, Text, Button, Provider} from 'react-native-paper';
+import {FlatList} from 'react-native-gesture-handler';
 
 const Home = ({navigation}) => {
   // modal visible
@@ -35,7 +37,7 @@ const Home = ({navigation}) => {
     shadowColor: '#000',
   };
   // set todays date with moment
-  const today = moment().format('YYYY-MM-');
+  const today = moment().format('YYYY-MM-DD');
   // get redux store data
   const customerInfo = useSelector(state => state.userProfile);
   const dispatch = useDispatch();
@@ -54,20 +56,50 @@ const Home = ({navigation}) => {
           {/* // add a calendar here */}
           <Calendar current={today} onDayPress={onDayPress} />
         </CalendarBox>
- 
+        {/* // MODAL HERE */}
         <Provider>
           <Portal>
             <Modal
               visible={modalVisible}
               onDismiss={hideModal}
               contentContainerStyle={containerStyle}>
-              <Text>Fixtures on the {selectedDate}</Text>
-              <Button mode="contained" onPress={hideModal}>
+              <HeaderModal>
+                <LargeHeader>{selectedDate}</LargeHeader>
+              </HeaderModal>
+              <ListBox>
+                <FlatList
+                  data={[
+                    {
+                      key: '1',
+                      clubName: 'Putney',
+                      team: 'Sunday 1',
+                      location: 'Home',
+                    },
+                  ]}
+                  renderItem={({item}) => (
+                    <ListItem>
+                      <ListItemText>
+                        <Text>{item.clubName}</Text>
+
+                        <Text>{item.team}</Text>
+
+                        <Text>{item.location}</Text>
+                      </ListItemText>
+                    </ListItem>
+                  )}
+                  keyExtractor={item => item.key}
+                />
+              </ListBox>
+              <Button
+                style={{width: '85%', alignSelf: 'center'}}
+                mode="contained"
+                onPress={hideModal}>
                 Close
               </Button>
             </Modal>
           </Portal>
         </Provider>
+        {/* // MODAL HERE */}
         <AddFixtures>
           <MenuRow>
             <Icon
@@ -108,6 +140,14 @@ export default Home;
 
 const Container = styled.View`
   flex: 1;
+  background-color: #f5fcff;
+`;
+
+const HeaderModal = styled.View`
+  justify-content: flex-start;
+  height: 25%;
+  background-color: red;
+  align-items: flex-start;
   background-color: #f5fcff;
 `;
 
@@ -164,4 +204,44 @@ const Buttons = styled.View`
   width: 100%;
   margin-top: 20px;
   margin-bottom: 20px;
+`;
+
+const ButtonBox = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+const ListBox = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+const ListItem = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+const ListItemText = styled.View`
+  flex: 1;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+const ListHeader = styled.Text`
+  font-size: 10px;
+  font-weight: bold;
 `;
