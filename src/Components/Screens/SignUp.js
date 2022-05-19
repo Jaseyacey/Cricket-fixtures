@@ -69,7 +69,11 @@ const SignUp = ({navigation}) => {
         </FormInput>
         <ButtonBox>
           <Button onPress={handleSubmit}>
-            <ButtonText>Sign Up</ButtonText>
+            <ButtonTextSignUp>Sign Up</ButtonTextSignUp>
+          </Button>
+          <Space />
+          <Button onPress={() => navigation.navigate('SignIn')}>
+            <ButtonTextSignUp>Sign In</ButtonTextSignUp>
           </Button>
         </ButtonBox>
       </Container>
@@ -105,7 +109,7 @@ const Input = styled.TextInput`
   margin-top: 10px;
 `;
 const ButtonBox = styled.View`
-  flex-direction: row;
+  
   justify-content: center;
   align-items: center;
   flex: 0.5;
@@ -123,4 +127,15 @@ const ButtonText = styled.Text`
   font-size: 20px;
   font-weight: bold;
   align-self: center;
+`;
+const Space = styled.View`
+  height: 10%;
+  width: 10%;
+`;
+
+const ButtonTextSignUp = styled.Text`
+color: #fff;
+font-size: 20px;
+font-weight: bold;
+align-self: center;
 `;

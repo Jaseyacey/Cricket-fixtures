@@ -1,7 +1,9 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import {DataStore} from '@aws-amplify/datastore';
 import {ClubProfile} from '../../models/index';
+import {COLORS} from '../Constants/Colors';
 
 const Profile = ({navigation}) => {
   const [clubName, setClubName] = useState('');
@@ -90,7 +92,14 @@ const Profile = ({navigation}) => {
         />
       </FormBox>
       <ButtonBox>
-        <Button onPress={handleSubmit}>
+      <Button
+          style={{
+            width: '85%',
+            alignSelf: 'center',
+            justifyContent: 'flex-start',
+            backgroundColor: `${COLORS.CRIC_BLUE}`,
+          }}
+          onPress={handleSubmit}>
           <ButtonText>Save</ButtonText>
         </Button>
       </ButtonBox>

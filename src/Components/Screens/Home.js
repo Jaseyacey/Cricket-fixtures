@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import styled from 'styled-components';
@@ -5,21 +6,25 @@ import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import moment from 'moment';
-// import react native paper
 import {Modal, Portal, Text, Button, Provider} from 'react-native-paper';
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList, ScrollView} from 'react-native-gesture-handler';
+import {COLORS} from '../Constants/Colors';
 
 const Home = ({navigation}) => {
   // modal visible
   const [modalVisible, setModalVisible] = React.useState(false);
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
-  // declare a gllobal variable to store the selected date
+  // declare a global variable to store the selected date
   const [selectedDate, setSelectedDate] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
   // set the selected date
   const onDayPress = day => {
     setSelectedDate(day.day);
-    console.log('selected day', day);
+    setSelectedMonth(day.month);
+    setSelectedYear(day.year);
+    console.log('selected day', day, selectedMonth);
     showModal();
   };
   console.log('selected date', selectedDate);
@@ -63,39 +68,58 @@ const Home = ({navigation}) => {
               visible={modalVisible}
               onDismiss={hideModal}
               contentContainerStyle={containerStyle}>
-              <HeaderModal>
-                <LargeHeader>{selectedDate}</LargeHeader>
-              </HeaderModal>
-              <ListBox>
-                <FlatList
-                  data={[
-                    {
-                      key: '1',
-                      clubName: 'Putney',
-                      team: 'Sunday 1',
-                      location: 'Home',
-                    },
-                  ]}
-                  renderItem={({item}) => (
-                    <ListItem>
-                      <ListItemText>
-                        <Text>{item.clubName}</Text>
+              <ScrollView>
+                <HeaderModal>
+                  <LargeHeader>
+                    {selectedDate} / {selectedMonth} / {selectedYear}
+                  </LargeHeader>
+                </HeaderModal>
+                <ListBox>
+                  <FlatList
+                    data={[
+                      {
+                        key: '1',
+                        clubName: 'Putney',
+                        team: 'Sunday 1',
+                        location: 'Home',
+                        contact: 'email@email',
+                      },
+                      {
+                        key: '2',
+                        clubName: 'Putney',
+                        team: 'Sunday 1',
+                        location: 'Home',
+                        contact: 'email@email',
+                      },
+                    ]}
+                    renderItem={({item}) => (
+                      <ListItem>
+                        <ListItemText>
+                          <ListText>{item.clubName}</ListText>
+                          <ListText>{item.team}</ListText>
+                          <ListText>{item.location}</ListText>
+                          <ListText onPress={() => alert('hello')}>
+                            {item.contact}
+                          </ListText>
+                        </ListItemText>
+                      </ListItem>
+                    )}
+                    keyExtractor={item => item.key}
+                  />
+                </ListBox>
 
-                        <Text>{item.team}</Text>
-
-                        <Text>{item.location}</Text>
-                      </ListItemText>
-                    </ListItem>
-                  )}
-                  keyExtractor={item => item.key}
-                />
-              </ListBox>
-              <Button
-                style={{width: '85%', alignSelf: 'center'}}
-                mode="contained"
-                onPress={hideModal}>
-                Close
-              </Button>
+                <Button
+                  style={{
+                    width: '85%',
+                    alignSelf: 'center',
+                    justifyContent: 'flex-start',
+                    backgroundColor: `${COLORS.CRIC_BLUE}`,
+                  }}
+                  mode="contained"
+                  onPress={hideModal}>
+                  Close
+                </Button>
+              </ScrollView>
             </Modal>
           </Portal>
         </Provider>
@@ -105,22 +129,26 @@ const Home = ({navigation}) => {
             <Icon
               name="emoji-people"
               size={30}
+              color={COLORS.CRIC_GREEN}
               onPress={() => navigation.navigate('Profile')}
             />
 
             <Icon
               name="chat"
               size={30}
+              color={COLORS.CRIC_GREEN}
               onPress={() => navigation.navigate('ChatScreen')}
             />
             <Icon
               name="add"
               size={30}
+              color={COLORS.CRIC_GREEN}
               onPress={() => navigation.navigate('AddFixtures')}
             />
             <Icon
               name="settings"
               size={30}
+              color={COLORS.CRIC_GREEN}
               onPress={() => navigation.navigate('Settings')}
             />
           </MenuRow>
@@ -145,7 +173,6 @@ const Container = styled.View`
 
 const HeaderModal = styled.View`
   justify-content: flex-start;
-  height: 25%;
   background-color: red;
   align-items: flex-start;
   background-color: #f5fcff;
@@ -156,16 +183,16 @@ const Header = styled.View`
   justify-content: center;
   align-items: center;
   background-color: #f5fcff;
-`;
-const LargeHeader = styled.Text`
   font-size: 30px;
   font-weight: bold;
 `;
 
 const CalendarBox = styled.View`
   flex: 1.8;
-  width: 100%;
-  background-color: #f5fcff;
+  width: 85%;
+  align-self: center;
+  border-radius: 25px;
+  background-color: ${COLORS.CRIC_BLUE};
   opacity: 0.8;
 `;
 
@@ -241,7 +268,12 @@ const ListItemText = styled.View`
   margin-bottom: 20px;
 `;
 
-const ListHeader = styled.Text`
+const ListText = styled.Text`
   font-size: 10px;
   font-weight: bold;
+`;
+const LargeHeader = styled.Text`
+  font-size: 30px;
+  font-weight: bold;
+  color: ${COLORS.CRIC_RED};
 `;

@@ -14,7 +14,7 @@ const SignIn = ({navigation}) => {
         password: password,
       });
       console.log('User signed in');
-      navigation.navigate('Profile');
+      navigation.navigate('Home');
     } catch (err) {
       alert(err.message);
       console.log({err});
