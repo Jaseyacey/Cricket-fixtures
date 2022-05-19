@@ -1,9 +1,11 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import {DataStore} from '@aws-amplify/datastore';
 import {ClubFixture} from '../../models/index';
 import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
+import {COLORS} from '../Constants/Colors';
 
 const AddFixtures = ({navigation}) => {
   const customerInfo = useSelector(state => state.userProfile);
@@ -75,7 +77,14 @@ const AddFixtures = ({navigation}) => {
         />
       </FormBox>
       <ButtonBox>
-        <Button onPress={handleSubmit}>
+        <Button
+          style={{
+            width: '85%',
+            alignSelf: 'center',
+            justifyContent: 'flex-start',
+            backgroundColor: `${COLORS.CRIC_BLUE}`,
+          }}
+          onPress={handleSubmit}>
           <ButtonText>Save</ButtonText>
         </Button>
       </ButtonBox>
