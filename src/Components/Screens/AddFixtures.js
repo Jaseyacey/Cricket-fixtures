@@ -1,13 +1,17 @@
+/* eslint-disable no-const-assign */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {DataStore} from '@aws-amplify/datastore';
-import {ClubFixture} from '../../models/index';
+import {AddFixtures} from '../../models/index';
 import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
 import {COLORS} from '../Constants/Colors';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import DatePicker from 'react-native-neat-date-picker';
+import moment from 'moment';
 
-const AddFixtures = ({navigation}) => {
+const AddNewFixtures = ({navigation}) => {
   const customerInfo = useSelector(state => state.userProfile);
   let userUuid = customerInfo.customerInfo.attributes.sub;
   console.log('userUuid here!!!!!', userUuid);
@@ -16,22 +20,39 @@ const AddFixtures = ({navigation}) => {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [location, setLocation] = useState('');
-  async function AddFixture() {
-    await DataStore.save(
-      new AddFixtures({
-        id: userUuid,
-        oppo_name: oppoName,
-        home_team: homeTeam,
-        date: date,
-        time: time,
-        location: location,
-      }),
-    );
-  }
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const dateText = date ? date : 'Select Date';
+  const openDatePicker = () => {
+    setShowDatePicker(true);
+  };
+  const onCancel = () => {
+    setShowDatePicker(false);
+  };
+  const onConfirm = output => {
+    setShowDatePicker(false);
+    setDate(output.dateString);
+    console.log(output.date);
+    console.log(output.dateString);
+  };
+  let body = {
+    oppoName: oppoName,
+    homeTeam: homeTeam,
+    date: date,
+    time: time,
+    location: location,
+    userUuid: userUuid,
+  };
+
   const handleSubmit = () => {
-    AddFixture();
-    console.log('fixture added', AddFixtures);
-    navigation.navigate('Home');
+    console.log('body', body);
+    DataStore.save(new AddFixtures(body))
+      .then(() => {
+        console.log('saved', body);
+        navigation.navigate('Home');
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
   };
 
   return (
@@ -62,11 +83,15 @@ const AddFixtures = ({navigation}) => {
           onValueChange={models => setTime(time)}
         />
         {/*  GAME DATE */}
-        <Input
-          placeholder="Enter the date"
-          value={date}
+        <CalButton onPress={openDatePicker}>
+          <CalText>{dateText}</CalText>
+        </CalButton>
+        <DatePicker
+          isVisible={showDatePicker}
           onChangeText={text => setDate(text)}
-          onValueChange={models => setDate(homeTeam)}
+          mode={'single'}
+          onCancel={onCancel}
+          onConfirm={onConfirm}
         />
         {/*  GAME LOCATION */}
         <Input
@@ -92,7 +117,7 @@ const AddFixtures = ({navigation}) => {
   );
 };
 
-export default AddFixtures;
+export default AddNewFixtures;
 
 const Container = styled.View`
   flex: 1;
@@ -123,6 +148,7 @@ const Input = styled.TextInput`
   border-width: 1px;
   border-radius: 5px;
   padding: 10px;
+  placeholdertextcolor: ${COLORS.CRIC_BLUE};
   margin-top: 10px;
   width: 200px;
 `;
@@ -145,4 +171,18 @@ const ButtonText = styled.Text`
   font-size: 20px;
   align-self: center;
   font-weight: bold;
+`;
+const CalButton = styled.TouchableOpacity`
+  border-color: #000;
+  border-width: 1px;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  width: 200px;
+  height: 40px;
+`;
+const CalText = styled.Text`
+  color: #000;
+  font-size: 15px;
+  align-self: center;
 `;

@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -9,6 +9,8 @@ import moment from 'moment';
 import {Modal, Portal, Text, Button, Provider} from 'react-native-paper';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {COLORS} from '../Constants/Colors';
+import {DataStore} from 'aws-amplify';
+import {AddFixtures} from '../../models/index';
 
 const Home = ({navigation}) => {
   // modal visible
@@ -41,16 +43,43 @@ const Home = ({navigation}) => {
     marginRight: 20,
     shadowColor: '#000',
   };
+
+  const [fixturesList, setFixturesList] = useState([]);
+  // get user uuid
+  let userUuid = useSelector(
+    state => state.userProfile.customerInfo.attributes.sub,
+  );
+  console.log('userUuid here!!!!!', userUuid);
+
+  const getFixturesList = () => {
+    DataStore.query(AddFixtures, {
+      filter: {userUuid: userUuid},
+      sort: {date: -1},
+    })
+      .then(data => {
+        console.log('fixturesList 60', data);
+        setFixturesList(data);
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
+  };
+  useEffect(() => {
+    getFixturesList();
+    console.log('fixturesList', fixturesList);
+  }, []);
+
   // set todays date with moment
   const today = moment().format('YYYY-MM-DD');
   // get redux store data
   const customerInfo = useSelector(state => state.userProfile);
   const dispatch = useDispatch();
-  // query the data store for the current user
-  setTimeout(() => {
-    console.log('customerInfo', customerInfo);
-  }, 1000);
+
   const clubName = customerInfo.customerInfo.username;
+  // query teh data store for the addfixtures table
+  const addFixtures = useSelector(state => state.addFixtures);
+  console.log('addFixtures', addFixtures);
+
   return (
     <>
       <Container>
@@ -124,7 +153,7 @@ const Home = ({navigation}) => {
           </Portal>
         </Provider>
         {/* // MODAL HERE */}
-        <AddFixtures>
+        <AddFixturesBox>
           <MenuRow>
             <Icon
               name="emoji-people"
@@ -143,7 +172,7 @@ const Home = ({navigation}) => {
               name="add"
               size={30}
               color={COLORS.CRIC_GREEN}
-              onPress={() => navigation.navigate('AddFixtures')}
+              onPress={() => navigation.navigate('AddNewFixtures')}
             />
             <Icon
               name="settings"
@@ -158,7 +187,7 @@ const Home = ({navigation}) => {
             <TinyText>Profile</TinyText>
             <TinyText>Settings</TinyText>
           </TextRow>
-        </AddFixtures>
+        </AddFixturesBox>
       </Container>
     </>
   );
@@ -196,7 +225,7 @@ const CalendarBox = styled.View`
   opacity: 0.8;
 `;
 
-const AddFixtures = styled.View`
+const AddFixturesBox = styled.View`
   flex: 1.2;
   justify-content: center;
   align-items: center;

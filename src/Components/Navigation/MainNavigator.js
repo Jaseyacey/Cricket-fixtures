@@ -9,7 +9,7 @@ import SignIn from '../Screens/SignIn';
 import Home from '../Screens/Home';
 import Settings from '../Screens/Settings';
 import ChatScreen from '../Screens/ChatScreen';
-import AddFixtures from '../Screens/AddFixtures';
+import AddNewFixtures from '../Screens/AddFixtures';
 
 const Stack = createStackNavigator();
 const MainNavigator = () => {
@@ -26,7 +26,7 @@ const MainNavigator = () => {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Settings" component={Settings} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
-        <Stack.Screen name="AddFixtures" component={AddFixtures} />
+        <Stack.Screen name="AddNewFixtures" component={AddNewFixtures} />
       </Stack.Navigator>
     </NavigationContainer>
   );

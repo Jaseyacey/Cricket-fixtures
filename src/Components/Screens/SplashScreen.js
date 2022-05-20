@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import {Auth, DataStore} from 'aws-amplify';
 import {customerInfo} from '../Redux/Actions/actions';
 import {useDispatch} from 'react-redux';
+import {COLORS} from '../Constants/Colors';
 
 const SplashScreen = ({navigation}) => {
   // check if user is signed in
-  const [userUuid, setUserUuid] = useState('');
   const dispatch = useDispatch();
   async function checkUser() {
     try {
@@ -27,14 +27,14 @@ const SplashScreen = ({navigation}) => {
   }, 2000);
 
   return (
-    <>
-      <Container>
-        <Header>
-          <LargeHeader>SplashScreen</LargeHeader>
-        </Header>
-        <FormInput />
-      </Container>
-    </>
+    <Container>
+      <Header>
+        <LargeHeader>CricFix - Lets get organising</LargeHeader>
+      </Header>
+      <LogoBox>
+        <Logo source={require('../Assets/Images/cricfix-logo.png')} />
+      </LogoBox>
+    </Container>
   );
 };
 
@@ -42,32 +42,31 @@ export default SplashScreen;
 
 const Container = styled.View`
   flex: 1;
+  background-color: ${COLORS.CRIC_BLUE};
 `;
 const LargeHeader = styled.Text`
   font-size: 30px;
+  color: ${COLORS.WHITE};
   text-align: center;
-  margin-top: 20%;
   font-weight: bold;
   color: #000;
   margin-bottom: 20px;
   margin-left: 20px;
 `;
-const FormInput = styled.View`
-  flex: 1;
+const LogoBox = styled.View`
+  flex: 0.5;
   justify-content: center;
   align-items: center;
-  background-color: #f5fcff;
 `;
-const Input = styled.TextInput`
-  border-color: #000;
-  border-width: 1px;
-  border-radius: 5px;
-  padding: 10px;
-  margin-top: 10px;
-  width: 200px;
+const Logo = styled.Image`
+  width: 100px;
+  height: 100px;
 `;
+
 const Header = styled.View`
-  flex: 1;
+  flex: 0.3;
+  border-radius: 25px;
+  background-color: ${COLORS.CRIC_GREEN};
   justify-content: center;
   align-items: center;
   background-color: #f5fcff;
