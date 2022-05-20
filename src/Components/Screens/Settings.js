@@ -24,6 +24,21 @@ const Settings = ({navigation}) => {
       <Header>
         <LargeHeader>Settings</LargeHeader>
       </Header>
+      <SettingsBox>
+        <SettingsHeader>Account</SettingsHeader>
+        <SettingsList>
+          <SettingsItem>
+            <SettingsItemText>
+              Edit my profile
+              <Icon name="keyboard-arrow-right" size={20} color="red" />
+            </SettingsItemText>
+            <SettingsItemText>
+              Notifications
+              <Icon name="keyboard-arrow-right" size={20} color="red" />
+            </SettingsItemText>
+          </SettingsItem>
+      </SettingsList>
+      </SettingsBox>
       <MenuRow>
         <Icon
           name="add"
@@ -55,20 +70,9 @@ const LargeHeader = styled.Text`
   font-size: 30px;
   font-weight: bold;
 `;
-
-const Calendar = styled.View`
-  flex: 0.8;
-  justify-content: center;
-  align-items: center;
+const SettingsBox = styled.View`
+  flex: 0.75;
   background-color: #f5fcff;
-`;
-
-const AddFixtures = styled.View`
-  flex: 0.2;
-  justify-content: center;
-  align-items: center;
-  background-color: #f5fcff;
-  margin-top: 20px;
 `;
 const MenuRow = styled.View`
   flex-direction: row;
@@ -77,14 +81,31 @@ const MenuRow = styled.View`
   width: 100%;
   margin-top: 20px;
 `;
-const TextRow = styled.View`
+const SettingsHeader = styled.Text`
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+`;
+const SettingsList = styled.View`
   flex-direction: row;
   justify-content: space-around;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
   margin-top: 20px;
 `;
-const TinyText = styled.Text`
-  font-size: 15px;
+const SettingsItem = styled.View`
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 10px;
+`;
+const SettingsItemText = styled.Text`
+  font-size: 20px;
+  width: 100%;
+  justify-content: center;
   font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
 `;
