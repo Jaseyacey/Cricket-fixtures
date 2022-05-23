@@ -50,35 +50,46 @@ const Home = ({navigation}) => {
     state => state.userProfile.customerInfo.attributes.sub,
   );
   console.log('userUuid here!!!!!', userUuid);
-
-  const getFixturesList = () => {
-    DataStore.query(AddFixtures, {
+  // get the fixtures list FROM GRAPHQL
+  const getFixturesList = async () => {
+    const result = await DataStore.query(AddFixtures, {
       filter: {userUuid: userUuid},
-      sort: {date: -1},
-    })
-      .then(data => {
-        console.log('fixturesList 60', data);
-        setFixturesList(data);
-      })
-      .catch(err => {
-        console.log('err', err);
-      });
+    });
+    console.log('result', result);
+    setFixturesList(result);
   };
+
+  let fixturesListData = fixturesList.map(item => {
+    return {
+      key: item.id,
+      date: item.date,
+      time: item.time,
+      location: item.location,
+      oppoName: item.oppoName,
+      homeTeam: item.homeTeam,
+    };
+  });
+  console.log('fixturesListData', fixturesListData.location);
+  let location = fixturesListData.location;
+  let date = fixturesListData.date;
+  let time = fixturesListData.time;
+  let oppoName = fixturesListData.oppoName;
+  let homeTeam = fixturesListData.homeTeam;
+
+  console.log('location', location);
   useEffect(() => {
     getFixturesList();
-    console.log('fixturesList', fixturesList);
+    console.log('fixturesList', fixturesListData);
   }, []);
 
   // set todays date with moment
   const today = moment().format('YYYY-MM-DD');
   // get redux store data
   const customerInfo = useSelector(state => state.userProfile);
+  console.log('customerInfo', customerInfo);
   const dispatch = useDispatch();
 
   const clubName = customerInfo.customerInfo.username;
-  // query teh data store for the addfixtures table
-  const addFixtures = useSelector(state => state.addFixtures);
-  console.log('addFixtures', addFixtures);
 
   return (
     <>
@@ -108,30 +119,105 @@ const Home = ({navigation}) => {
                     data={[
                       {
                         key: '1',
-                        clubName: 'Putney',
-                        team: 'Sunday 1',
-                        location: 'Home',
-                        contact: 'email@email',
+                        date: '22/05',
+                        time: '13:00',
+                        location: 'home',
+                        oppoName: 'Barnes',
+                        homeTeam: 'Sunday 1',
+                        contact: 'secretary',
                       },
                       {
                         key: '2',
-                        clubName: 'Putney',
-                        team: 'Sunday 1',
-                        location: 'Home',
-                        contact: 'email@email',
+                        date: '22/05',
+                        time: '13:00',
+                        location: 'home',
+                        oppoName: 'Barnes',
+                        homeTeam: 'Sunday 1',
+                        contact: 'secretary',
+                      },
+                      {
+                        key: '3',
+                        date: '22/05',
+                        time: '13:00',
+                        location: 'home',
+                        oppoName: 'Barnes',
+                        homeTeam: 'Sunday 1',
+                        contact: 'secretary',
+                      },
+                      {
+                        key: '4',
+                        date: '22/05',
+                        time: '13:00',
+                        location: 'home',
+                        oppoName: 'Barnes',
+                        homeTeam: 'Sunday 1',
+                        contact: 'secretary',
+                      },
+                      {
+                        key: '5',
+                        date: '22/05',
+                        time: '13:00',
+                        location: 'home',
+                        oppoName: 'Barnes',
+                        homeTeam: 'Sunday 1',
+                        contact: 'secretary',
+                      },
+                      {
+                        key: '6',
+                        date: '22/05',
+                        time: '13:00',
+                        location: 'home',
+                        oppoName: 'Barnes',
+                        homeTeam: 'Sunday 1',
+                        contact: 'secretary',
+                      },
+                      {
+                        key: '7',
+                        date: '22/05',
+                        time: '13:00',
+                        location: 'home',
+                        oppoName: 'Barnes',
+                        homeTeam: 'Sunday 1',
+                        contact: 'secretary',
+                      },
+                      {
+                        key: '8',
+                        date: '22/05',
+                        time: '13:00',
+                        location: 'home',
+                        oppoName: 'Barnes',
+                        homeTeam: 'Sunday 1',
+                        contact: 'secretary',
                       },
                     ]}
                     renderItem={({item}) => (
-                      <ListItem>
-                        <ListItemText>
-                          <ListText>{item.clubName}</ListText>
-                          <ListText>{item.team}</ListText>
-                          <ListText>{item.location}</ListText>
-                          <ListText onPress={() => alert('hello')}>
-                            {item.contact}
-                          </ListText>
-                        </ListItemText>
-                      </ListItem>
+
+                        <>
+                        <Table>
+                          <Row>
+                            <Cell>
+                              <TinyText>{item.date}</TinyText>
+                            </Cell>
+                            <Cell>
+                              <TinyText>{item.time}</TinyText>
+                            </Cell>
+                            <Cell>
+                              <TinyText>{item.location}</TinyText>
+                            </Cell>
+                            <Cell>
+                              <TinyText>{item.oppoName}</TinyText>
+                            </Cell>
+                            <Cell>
+                              <TinyText>{item.homeTeam}</TinyText>
+                            </Cell>
+                            <Cell>
+                              <TinyText onPress={() => alert('Hello world')}>
+                                {item.contact}
+                              </TinyText>
+                            </Cell>
+                          </Row>
+                        </Table>
+                        </>
                     )}
                     keyExtractor={item => item.key}
                   />
@@ -249,26 +335,8 @@ const TextRow = styled.View`
   margin-top: 20px;
 `;
 const TinyText = styled.Text`
-  font-size: 15px;
+  font-size: 10px;
   font-weight: bold;
-`;
-const Buttons = styled.View`
-  flex: 1;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: flex-end;
-  width: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
-`;
-
-const ButtonBox = styled.View`
-  flex: 1;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
-  margin-top: 20px;
-  margin-bottom: 20px;
 `;
 
 const ListBox = styled.View`
@@ -287,13 +355,28 @@ const ListItem = styled.View`
   margin-top: 20px;
   margin-bottom: 20px;
 `;
-const ListItemText = styled.View`
+const Table = styled.View`
   flex: 1;
-  align-items: flex-start;
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
   margin-top: 20px;
+  margin-bottom: 20px;
+`;
+const Row = styled.View`
+  flex-direction: row;
+  width: 100%;
+  background-color: ${COLORS.CRIC_BLUE};
+`;
+const Cell = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+  border-left-width: 2px;
+  border-bottom-width: 2px;
+  border-color: ${COLORS.CRIC_GREEN};
   margin-bottom: 20px;
 `;
 

@@ -4,9 +4,10 @@ import { schema } from './schema';
 
 
 
-const { AddFixtures, ClubProfile, Teams } = initSchema(schema);
+const { Messages, AddFixtures, ClubProfile, Teams } = initSchema(schema);
 
 export {
+  Messages,
   AddFixtures,
   ClubProfile,
   Teams
