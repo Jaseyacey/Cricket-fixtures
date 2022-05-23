@@ -1,3 +1,8 @@
+type Messages @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  userMessages: String
+}
+
 type AddFixtures @model @auth(rules: [{allow: public}]) {
   id: ID!
   home_team: String

@@ -42,17 +42,19 @@ const AddNewFixtures = ({navigation}) => {
     location: location,
     userUuid: userUuid,
   };
-
+  // DataStore.save(new AddFixtures(body))
+  //   .then(() => {
+  //     console.log('saved', body);
+  //     navigation.navigate('Home');
+  //   })
+  //   .catch(err => {
+  //     console.log('err', err);
+  //   });
   const handleSubmit = () => {
     console.log('body', body);
-    DataStore.save(new AddFixtures(body))
-      .then(() => {
-        console.log('saved', body);
-        navigation.navigate('Home');
-      })
-      .catch(err => {
-        console.log('err', err);
-      });
+    DataStore.save(new AddFixtures(body));
+
+    navigation.navigate('Home');
   };
 
   return (

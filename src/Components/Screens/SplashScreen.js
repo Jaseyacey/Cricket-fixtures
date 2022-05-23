@@ -55,12 +55,17 @@ const LargeHeader = styled.Text`
 `;
 const LogoBox = styled.View`
   flex: 0.5;
+  height: 100%;
   justify-content: center;
   align-items: center;
 `;
 const Logo = styled.Image`
-  width: 100px;
-  height: 100px;
+  padding-top: 25%;
+  width: 75%;
+  height: 80%;
+  align-self: center;
+  justify-self: center;
+  border-radius: 50px;
 `;
 
 const Header = styled.View`
