@@ -47,7 +47,7 @@ export declare class ClubProfile {
   readonly club_name?: string | null;
   readonly club_number?: string | null;
   readonly club_description?: string | null;
-  readonly club_website?: Teams | null;
+  readonly club_website?: string | null;
   readonly club_teams?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
