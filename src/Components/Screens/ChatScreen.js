@@ -20,20 +20,25 @@ const ChatScreen = () => {
     DataStore.query(Messages, {
       filter: {
         id: userUuid,
+        message: {
+          contains: '',
+        },
       },
     }).then(data => {
       console.log('data in timeout', data);
       setNewMessages(data);
+      console.log('newMessages', newMessages);
       setIsLoading(false);
     });
   }, 1000);
-  console.log('userInfoHere', userUuid);
+  console.log('userInfoHere', newMessages);
   const handleSend = async () => {
     // send new message to graoph ql  and update the state
     const newMessage = {
       userMessages: userMessage,
       id: userUuid,
       // createdAt: new Date().toISOString(),
+      
     };
     await DataStore.save(new Messages(newMessage));
     console.log('messsages in handleSend', newMessage);
@@ -56,7 +61,7 @@ const ChatScreen = () => {
         </MessageView>
         <MessageView>
           {/* // show all opponent messages */}
-          {/* {mappedOpponentMessages} */}
+          {newMessages}
         </MessageView>
       </MessagesView>
 

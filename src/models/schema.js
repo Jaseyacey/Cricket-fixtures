@@ -187,9 +187,7 @@ export const schema = {
                 "club_website": {
                     "name": "club_website",
                     "isArray": false,
-                    "type": {
-                        "nonModel": "Teams"
-                    },
+                    "type": "AWSURL",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -270,5 +268,5 @@ export const schema = {
             }
         }
     },
-    "version": "17ee8976f980be7bbd2861aa43d80c6f"
+    "version": "5abd9faa7a78147653ebebfd93e4ed04"
 };

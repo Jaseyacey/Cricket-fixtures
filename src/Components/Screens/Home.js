@@ -53,10 +53,13 @@ const Home = ({navigation}) => {
   // get the fixtures list FROM GRAPHQL
   const getFixturesList = async () => {
     const result = await DataStore.query(AddFixtures, {
-      filter: {userUuid: userUuid},
+      filter: {
+        userUuid: userUuid,
+      },
     });
     console.log('result', result);
     setFixturesList(result);
+    console.log('fixturesList', fixturesList);
   };
 
   let fixturesListData = fixturesList.map(item => {
@@ -69,14 +72,14 @@ const Home = ({navigation}) => {
       homeTeam: item.homeTeam,
     };
   });
-  console.log('fixturesListData', fixturesListData.location);
-  let location = fixturesListData.location;
-  let date = fixturesListData.date;
-  let time = fixturesListData.time;
-  let oppoName = fixturesListData.oppoName;
-  let homeTeam = fixturesListData.homeTeam;
+  console.log('fixturesListData', fixturesListData.oppoName);
+  // let location = fixturesListData.location;
+  // let date = fixturesListData.date;
+  // let time = fixturesListData.time;
+  // let oppoName = fixturesListData.oppoName;
+  // let homeTeam = fixturesListData.homeTeam;
 
-  console.log('location', location);
+  console.log('location', 'location');
   useEffect(() => {
     getFixturesList();
     console.log('fixturesList', fixturesListData);
@@ -191,8 +194,7 @@ const Home = ({navigation}) => {
                       },
                     ]}
                     renderItem={({item}) => (
-
-                        <>
+                      <>
                         <Table>
                           <Row>
                             <Cell>
@@ -217,7 +219,7 @@ const Home = ({navigation}) => {
                             </Cell>
                           </Row>
                         </Table>
-                        </>
+                      </>
                     )}
                     keyExtractor={item => item.key}
                   />
