@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import styled from 'styled-components';
@@ -15,27 +16,43 @@ const Profile = ({navigation}) => {
   const [userUuid, setUserUuid] = useState('');
   const [teamName, setTeamName] = useState({});
   const [clubDescription, setClubDescription] = useState('');
+  const [newClub, setNewClub] = useState('');
   const customerInfo = useSelector(state => state.userProfile);
 
   async function getClubInfo() {
-    setUserUuid(customerInfo.customerInfo.attributes.sub);
-    console.log('userUuid here!!!!!', customerInfo.customerInfo.attributes.sub);
-    await DataStore.save(
-      new ClubProfile({
-        id: userUuid,
-        club_email: 'clubEmail@club.com',
-        club_name: 'clubName',
-        club_number: 'clubPhone',
-        club_description: 'clubDescription',
-        club_website: 'https://www.clubWebsite.com',
-        club_teams: {
-          team_name: {'jason jason jason': 'jason jason jason'},
+    let clubTeams = {
+      teamName: [
+        {
+          teamName: 'Sunday 1,',
+          // teamName: 'Sunday 2,',
+          // teamName: 'Sunday 3,',
+          // teamName: 'Sunday 4,',
         },
-      }),
-    );
+      ],
+    };
+
+    console.log('userUuid here!!!!!', customerInfo.customerInfo.attributes.sub);
+    setUserUuid(customerInfo.customerInfo.attributes.sub);
+    const clubInfo = async () => {
+      const newClub = {
+        id: '1809db97-dcea-44a4-8e95-8654dc22594b',
+        club_name: 'clubName',
+        club_email: 'clubEmail@email.com',
+        club_number: 'clubPhone',
+        club_location: 'clubLocation',
+        club_website: 'https://www.google.com',
+        club_teams: {clubTeams},
+        club_description: 'clubDescription',
+      };
+      await DataStore.save(new ClubProfile(newClub));
+      console.log('newClub', newClub);
+      setNewClub(newClub);
+    };
+    clubInfo();
   }
   const handleSubmit = () => {
     getClubInfo();
+    console.log('newClub', newClub);
     console.log('body', userUuid);
     navigation.navigate('Home');
   };
