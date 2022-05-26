@@ -50,12 +50,14 @@ const Profile = ({navigation}) => {
     };
     clubInfo();
   }
+
   const handleSubmit = () => {
     getClubInfo();
     console.log('newClub', newClub);
     console.log('body', userUuid);
     navigation.navigate('Home');
   };
+
 
   return (
     <Container>

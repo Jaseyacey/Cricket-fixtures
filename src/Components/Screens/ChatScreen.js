@@ -38,6 +38,7 @@ const ChatScreen = () => {
       userMessages: userMessage,
       id: userUuid,
       // createdAt: new Date().toISOString(),
+      
     };
     await DataStore.save(new Messages(newMessage));
     console.log('messsages in handleSend', newMessage);
