@@ -16,6 +16,8 @@ const ChatScreen = () => {
   let userUuid = useSelector(
     state => state.userProfile.customerInfo.attributes.sub,
   );
+  console.log('userUuid', userUuid);
+
   setTimeout(() => {
     DataStore.query(Messages, {
       filter: {
@@ -38,7 +40,6 @@ const ChatScreen = () => {
       userMessages: userMessage,
       id: userUuid,
       // createdAt: new Date().toISOString(),
-      
     };
     await DataStore.save(new Messages(newMessage));
     console.log('messsages in handleSend', newMessage);

@@ -10,7 +10,7 @@ import {Modal, Portal, Text, Button, Provider} from 'react-native-paper';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {COLORS} from '../Constants/Colors';
 import {DataStore} from 'aws-amplify';
-import {AddFixtures} from '../../models/index';
+import {AddFixtures, ClubProfile} from '../../models/index';
 
 const Home = ({navigation}) => {
   // modal visible
@@ -44,45 +44,38 @@ const Home = ({navigation}) => {
     shadowColor: '#000',
   };
 
-  const [fixturesList, setFixturesList] = useState([]);
+  const [fixturesListData, setFixturesListData] = useState([]);
   // get user uuid
   let userUuid = useSelector(
     state => state.userProfile.customerInfo.attributes.sub,
   );
-  console.log('userUuid here!!!!!', userUuid);
-  // get the fixtures list FROM GRAPHQL
-  const getFixturesList = async () => {
-    const result = await DataStore.query(AddFixtures, {
-      filter: {
-        userUuid: userUuid,
-      },
-    });
-    console.log('result', result);
-    setFixturesList(result);
-    console.log('fixturesList', fixturesList);
+
+  const getFixtures = async () => {
+    // call the api to get the profile for the user
+    const response = await DataStore.query(ClubProfile);
+    console.log('response', response);
+    
+    
+    setFixturesListData(clubProfile.fixtures);
+    console.log('fixtures ghere', DataStore.query(AddFixtures));
   };
 
-  let fixturesListData = fixturesList.map(item => {
-    return {
-      key: item.id,
-      date: item.date,
-      time: item.time,
-      location: item.location,
-      oppoName: item.oppoName,
-      homeTeam: item.homeTeam,
-    };
-  });
-  console.log('fixturesListData', fixturesListData.oppoName);
-  // let location = fixturesListData.location;
-  // let date = fixturesListData.date;
-  // let time = fixturesListData.time;
-  // let oppoName = fixturesListData.oppoName;
-  // let homeTeam = fixturesListData.homeTeam;
+  // let fixturesList = fixturesListData.map(item => {
+  //   return {
+  //     key: item.id,
+  //     date: item.date,
+  //     time: item.time,
+  //     location: item.location,
+  //     oppoName: item.oppoName,
+  //     homeTeam: item.homeTeam,
+  //   };
+  // });
 
-  console.log('location', 'location');
   useEffect(() => {
-    getFixturesList();
-    console.log('fixturesList', fixturesListData);
+    console.log('userUuid here!!!!!', userUuid);
+    // get the fixtures list FROM GRAPHQL
+    getFixtures();
+    console.log('FIXTURES LIST', fixturesListData);
   }, []);
 
   // set todays date with moment
