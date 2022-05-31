@@ -10,7 +10,7 @@ import {Modal, Portal, Text, Button, Provider} from 'react-native-paper';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {COLORS} from '../Constants/Colors';
 import {DataStore} from 'aws-amplify';
-import {AddFixtures} from '../../models/index';
+import {AddFixtures, ClubProfile} from '../../models/index';
 
 const Home = ({navigation}) => {
   // modal visible
@@ -44,45 +44,34 @@ const Home = ({navigation}) => {
     shadowColor: '#000',
   };
 
-  const [fixturesList, setFixturesList] = useState([]);
+  const [fixturesListData, setFixturesListData] = useState([]);
   // get user uuid
   let userUuid = useSelector(
     state => state.userProfile.customerInfo.attributes.sub,
   );
-  console.log('userUuid here!!!!!', userUuid);
-  // get the fixtures list FROM GRAPHQL
-  const getFixturesList = async () => {
-    const result = await DataStore.query(AddFixtures, {
-      filter: {
-        userUuid: userUuid,
-      },
+
+  const getFixtures = async () => {
+    // call the api to get the profile for the user
+    const response = await DataStore.query(ClubProfile);
+    let fixturesDataList = DataStore.query(AddFixtures).then(data => {
+      console.log('fixturesDataList', data);
+      setFixturesListData(data);
+      // map through the data and get the data for the selected date
+      let mappedData = data.map(item => {
+        console.log('item', item);
+        if (item.attributes.date === {selectedDate}) {
+          console.log('item', item);
+          return item;
+        }
+      });
+      setFixturesListData(mappedData);
     });
-    console.log('result', result);
-    setFixturesList(result);
-    console.log('fixturesList', fixturesList);
+    console.log('fixturesDataList', fixturesDataList);
   };
 
-  let fixturesListData = fixturesList.map(item => {
-    return {
-      key: item.id,
-      date: item.date,
-      time: item.time,
-      location: item.location,
-      oppoName: item.oppoName,
-      homeTeam: item.homeTeam,
-    };
-  });
-  console.log('fixturesListData', fixturesListData.oppoName);
-  // let location = fixturesListData.location;
-  // let date = fixturesListData.date;
-  // let time = fixturesListData.time;
-  // let oppoName = fixturesListData.oppoName;
-  // let homeTeam = fixturesListData.homeTeam;
-
-  console.log('location', 'location');
   useEffect(() => {
-    getFixturesList();
-    console.log('fixturesList', fixturesListData);
+    // get the fixtures list FROM GRAPHQL
+    getFixtures();
   }, []);
 
   // set todays date with moment
@@ -119,98 +108,25 @@ const Home = ({navigation}) => {
                 </HeaderModal>
                 <ListBox>
                   <FlatList
-                    data={[
-                      {
-                        key: '1',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                      {
-                        key: '2',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                      {
-                        key: '3',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                      {
-                        key: '4',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                      {
-                        key: '5',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                      {
-                        key: '6',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                      {
-                        key: '7',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                      {
-                        key: '8',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                    ]}
+                    data={fixturesListData}
                     renderItem={({item}) => (
                       <>
                         <Table>
                           <Row>
                             <Cell>
-                              <TinyText>{item.date}</TinyText>
+                              <TinyText>{item.fixture_date}</TinyText>
                             </Cell>
                             <Cell>
-                              <TinyText>{item.time}</TinyText>
+                              <TinyText>{item.fixture_time}</TinyText>
                             </Cell>
                             <Cell>
-                              <TinyText>{item.location}</TinyText>
+                              <TinyText>{item.fixture_location}</TinyText>
                             </Cell>
                             <Cell>
-                              <TinyText>{item.oppoName}</TinyText>
+                              <TinyText>{item.away_team}</TinyText>
                             </Cell>
                             <Cell>
-                              <TinyText>{item.homeTeam}</TinyText>
+                              <TinyText>{item.home_team}</TinyText>
                             </Cell>
                             <Cell>
                               <TinyText onPress={() => alert('Hello world')}>

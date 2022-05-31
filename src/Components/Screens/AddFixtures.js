@@ -35,24 +35,24 @@ const AddNewFixtures = ({navigation}) => {
     console.log(output.dateString);
   };
   let body = {
-    oppoName: oppoName,
-    homeTeam: homeTeam,
-    date: date,
-    time: time,
-    location: location,
-    userUuid: userUuid,
+    away_team: oppoName,
+    home_team: homeTeam,
+    fixture_date: date,
+    fixture_time: '14:00',
+    fixture_location: location,
+    id: userUuid,
   };
-  // DataStore.save(new AddFixtures(body))
-  //   .then(() => {
-  //     console.log('saved', body);
-  //     navigation.navigate('Home');
-  //   })
-  //   .catch(err => {
-  //     console.log('err', err);
-  //   });
+
   const handleSubmit = () => {
     console.log('body', body);
-    DataStore.save(new AddFixtures(body));
+    DataStore.save(new AddFixtures(body))
+      .then(() => {
+        console.log('saved', body);
+        navigation.navigate('Home');
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
 
     navigation.navigate('Home');
   };

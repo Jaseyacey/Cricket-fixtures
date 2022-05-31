@@ -4,6 +4,7 @@ import {Auth, DataStore} from 'aws-amplify';
 import {customerInfo} from '../Redux/Actions/actions';
 import {useDispatch} from 'react-redux';
 import {COLORS} from '../Constants/Colors';
+import {AddFixtures, ClubProfile} from '../../models/index';
 
 const SplashScreen = ({navigation}) => {
   // check if user is signed in
@@ -12,8 +13,7 @@ const SplashScreen = ({navigation}) => {
     try {
       const user = await Auth.currentAuthenticatedUser();
       const userInfo = user;
-      console.log('user info at sign up', user);
-      console.log('games info at sign up', userInfo);
+      console.log('USER INFO +++>>>', userInfo);
       dispatch(customerInfo(user));
       navigation.navigate('Home');
     } catch (err) {
@@ -22,9 +22,19 @@ const SplashScreen = ({navigation}) => {
     }
   }
 
-  setTimeout(() => {
+  const userProfile = DataStore.query(ClubProfile);
+  console.log('userProfile', userProfile);
+  DataStore.query(AddFixtures).then(res => {
+    console.log('models', res);
+    // map through the models
+    res.map(item => {
+      console.log('item', item);
+    });
+  });
+
+  useEffect(() => {
     checkUser();
-  }, 2000);
+  }, []);
 
   return (
     <Container>

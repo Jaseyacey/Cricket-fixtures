@@ -30,34 +30,26 @@ const Profile = ({navigation}) => {
         },
       ],
     };
-
-    console.log('userUuid here!!!!!', customerInfo.customerInfo.attributes.sub);
-    setUserUuid(customerInfo.customerInfo.attributes.sub);
-    const clubInfo = async () => {
-      const newClub = {
-        id: '1809db97-dcea-44a4-8e95-8654dc22594b',
-        club_name: 'clubName',
-        club_email: 'clubEmail@email.com',
-        club_number: 'clubPhone',
-        club_location: 'clubLocation',
-        club_website: 'https://www.google.com',
-        club_teams: {clubTeams},
-        club_description: 'clubDescription',
-      };
-      await DataStore.save(new ClubProfile(newClub));
-      console.log('newClub', newClub);
-      setNewClub(newClub);
-    };
-    clubInfo();
+    let uuid = customerInfo.customerInfo.attributes.sub;
+    DataStore.save(
+      new ClubProfile({
+        id: uuid,
+        club_email: clubEmail,
+        club_name: clubName,
+        club_number: clubPhone,
+        club_description: clubDescription,
+        club_website: clubWebsite,
+        club_teams: clubTeams,
+      }),
+    );
+    console.log('newClub', ClubProfile);
   }
 
   const handleSubmit = () => {
     getClubInfo();
-    console.log('newClub', newClub);
-    console.log('body', userUuid);
+    console.log('saved', getClubInfo);
     navigation.navigate('Home');
   };
-
 
   return (
     <Container>
@@ -98,6 +90,7 @@ const Profile = ({navigation}) => {
           placeholder="Enter contact number"
           placeholderTextColor={COLORS.WHITE}
           value={clubPhone}
+          // setValidation={setVerifyInput}
           onChangeText={text => setClubPhone(text)}
           onValueChange={models => setClubPhone(clubPhone)}
         />
@@ -107,6 +100,7 @@ const Profile = ({navigation}) => {
           placeholder="Enter website"
           placeholderTextColor={COLORS.WHITE}
           value={clubWebsite}
+          // setValidation={setVerifyInput}
           onChangeText={text => setClubWebsite(text)}
           onValueChange={models => setClubWebsite(clubWebsite)}
         />
@@ -126,12 +120,14 @@ const Profile = ({navigation}) => {
           placeholderTextColor={COLORS.WHITE}
           value={clubDescription}
           multiline={true}
+          // setValidation={setVerifyInput}
           onChangeText={text => setClubDescription(text)}
           onValueChange={models => setClubDescription(clubDescription)}
         />
       </FormBox>
       <ButtonBox>
         <Button
+          // disabled={!verifyInput}
           style={{
             width: '85%',
             alignSelf: 'center',
