@@ -31,20 +31,18 @@ const Profile = ({navigation}) => {
       ],
     };
     let uuid = customerInfo.customerInfo.attributes.sub;
-    const newClub = {
-      id: uuid,
-      club_email: 'clubEmail@clunb.ib',
-      club_name: 'clubName',
-      club_number: 'clubPhone',
-      club_location: 'clubLocation',
-      club_website: 'https://www.clubWebsite.com',
-      club_teams: {clubTeams},
-      club_description: 'clubDescription',
-    };
-
-    setNewClub(newClub);
-    DataStore.save(new ClubProfile(newClub));
-    console.log('newClub', newClub);
+    DataStore.save(
+      new ClubProfile({
+        id: uuid,
+        club_email: clubEmail,
+        club_name: clubName,
+        club_number: clubPhone,
+        club_description: clubDescription,
+        club_website: clubWebsite,
+        club_teams: clubTeams,
+      }),
+    );
+    console.log('newClub', ClubProfile);
   }
 
   const handleSubmit = () => {

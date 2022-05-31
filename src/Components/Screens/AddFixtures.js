@@ -38,7 +38,7 @@ const AddNewFixtures = ({navigation}) => {
     away_team: oppoName,
     home_team: homeTeam,
     fixture_date: date,
-    fixture_time: time,
+    fixture_time: '14:00',
     fixture_location: location,
     id: userUuid,
   };

@@ -53,29 +53,25 @@ const Home = ({navigation}) => {
   const getFixtures = async () => {
     // call the api to get the profile for the user
     const response = await DataStore.query(ClubProfile);
-    console.log('response', response);
-    
-    
-    setFixturesListData(clubProfile.fixtures);
-    console.log('fixtures ghere', DataStore.query(AddFixtures));
+    let fixturesDataList = DataStore.query(AddFixtures).then(data => {
+      console.log('fixturesDataList', data);
+      setFixturesListData(data);
+      // map through the data and get the data for the selected date
+      let mappedData = data.map(item => {
+        console.log('item', item);
+        if (item.attributes.date === {selectedDate}) {
+          console.log('item', item);
+          return item;
+        }
+      });
+      setFixturesListData(mappedData);
+    });
+    console.log('fixturesDataList', fixturesDataList);
   };
 
-  // let fixturesList = fixturesListData.map(item => {
-  //   return {
-  //     key: item.id,
-  //     date: item.date,
-  //     time: item.time,
-  //     location: item.location,
-  //     oppoName: item.oppoName,
-  //     homeTeam: item.homeTeam,
-  //   };
-  // });
-
   useEffect(() => {
-    console.log('userUuid here!!!!!', userUuid);
     // get the fixtures list FROM GRAPHQL
     getFixtures();
-    console.log('FIXTURES LIST', fixturesListData);
   }, []);
 
   // set todays date with moment
@@ -112,98 +108,25 @@ const Home = ({navigation}) => {
                 </HeaderModal>
                 <ListBox>
                   <FlatList
-                    data={[
-                      {
-                        key: '1',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                      {
-                        key: '2',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                      {
-                        key: '3',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                      {
-                        key: '4',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                      {
-                        key: '5',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                      {
-                        key: '6',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                      {
-                        key: '7',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                      {
-                        key: '8',
-                        date: '22/05',
-                        time: '13:00',
-                        location: 'home',
-                        oppoName: 'Barnes',
-                        homeTeam: 'Sunday 1',
-                        contact: 'secretary',
-                      },
-                    ]}
+                    data={fixturesListData}
                     renderItem={({item}) => (
                       <>
                         <Table>
                           <Row>
                             <Cell>
-                              <TinyText>{item.date}</TinyText>
+                              <TinyText>{item.fixture_date}</TinyText>
                             </Cell>
                             <Cell>
-                              <TinyText>{item.time}</TinyText>
+                              <TinyText>{item.fixture_time}</TinyText>
                             </Cell>
                             <Cell>
-                              <TinyText>{item.location}</TinyText>
+                              <TinyText>{item.fixture_location}</TinyText>
                             </Cell>
                             <Cell>
-                              <TinyText>{item.oppoName}</TinyText>
+                              <TinyText>{item.away_team}</TinyText>
                             </Cell>
                             <Cell>
-                              <TinyText>{item.homeTeam}</TinyText>
+                              <TinyText>{item.home_team}</TinyText>
                             </Cell>
                             <Cell>
                               <TinyText onPress={() => alert('Hello world')}>

@@ -7,6 +7,10 @@ export declare class Teams {
   constructor(init: ModelInit<Teams>);
 }
 
+type ClubProfileMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type MessagesMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -15,8 +19,18 @@ type AddFixturesMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type ClubProfileMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
+export declare class ClubProfile {
+  readonly id: string;
+  readonly club_description: string;
+  readonly club_email: string;
+  readonly club_name: string;
+  readonly club_number: string;
+  readonly club_website: string;
+  readonly club_teams?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<ClubProfile, ClubProfileMetaData>);
+  static copyOf(source: ClubProfile, mutator: (draft: MutableModel<ClubProfile, ClubProfileMetaData>) => MutableModel<ClubProfile, ClubProfileMetaData> | void): ClubProfile;
 }
 
 export declare class Messages {
@@ -39,18 +53,4 @@ export declare class AddFixtures {
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<AddFixtures, AddFixturesMetaData>);
   static copyOf(source: AddFixtures, mutator: (draft: MutableModel<AddFixtures, AddFixturesMetaData>) => MutableModel<AddFixtures, AddFixturesMetaData> | void): AddFixtures;
-}
-
-export declare class ClubProfile {
-  readonly id: string;
-  readonly club_email?: string | null;
-  readonly club_name?: string | null;
-  readonly club_number?: string | null;
-  readonly club_description?: string | null;
-  readonly club_website?: string | null;
-  readonly club_teams?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  constructor(init: ModelInit<ClubProfile, ClubProfileMetaData>);
-  static copyOf(source: ClubProfile, mutator: (draft: MutableModel<ClubProfile, ClubProfileMetaData>) => MutableModel<ClubProfile, ClubProfileMetaData> | void): ClubProfile;
 }
