@@ -11,6 +11,7 @@ import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {COLORS} from '../Constants/Colors';
 import {DataStore} from 'aws-amplify';
 import {AddFixtures, ClubProfile} from '../../models/index';
+import {openInbox} from 'react-native-email-link';
 
 const Home = ({navigation}) => {
   // modal visible
@@ -28,6 +29,20 @@ const Home = ({navigation}) => {
     setSelectedYear(day.year);
     console.log('selected day', day, selectedMonth);
     showModal();
+    let fixturesDataList = DataStore.query(AddFixtures).then(data => {
+      console.log('fixturesDataList', data);
+      setFixturesListData(data);
+      // map through the data and get the data for the selected date
+      let mappedData = data.map(item => {
+        console.log('item', item);
+        if (item.attributes.date === {selectedDate}) {
+          console.log('item', item, selectedDate);
+          return item;
+        }
+      });
+      setFixturesListData(mappedData);
+    });
+    console.log('fixturesDataList', fixturesDataList);
   };
   console.log('selected date', selectedDate);
   const containerStyle = {
@@ -53,20 +68,10 @@ const Home = ({navigation}) => {
   const getFixtures = async () => {
     // call the api to get the profile for the user
     const response = await DataStore.query(ClubProfile);
-    let fixturesDataList = DataStore.query(AddFixtures).then(data => {
-      console.log('fixturesDataList', data);
-      setFixturesListData(data);
-      // map through the data and get the data for the selected date
-      let mappedData = data.map(item => {
-        console.log('item', item);
-        if (item.attributes.date === {selectedDate}) {
-          console.log('item', item);
-          return item;
-        }
-      });
-      setFixturesListData(mappedData);
-    });
-    console.log('fixturesDataList', fixturesDataList);
+  };
+  const emailSend = () => {
+    openInbox();
+    console.log('emailSend');
   };
 
   useEffect(() => {
@@ -78,7 +83,10 @@ const Home = ({navigation}) => {
   const today = moment().format('YYYY-MM-DD');
   // get redux store data
   const customerInfo = useSelector(state => state.userProfile);
-  console.log('customerInfo', customerInfo);
+  console.log('REDUX INFO AT HOME', customerInfo);
+  // get the user email
+  const userEmail = customerInfo.customerInfo.attributes.email;
+  console.log('userUuid', userEmail);
   const dispatch = useDispatch();
 
   const clubName = customerInfo.customerInfo.username;
@@ -129,8 +137,8 @@ const Home = ({navigation}) => {
                               <TinyText>{item.home_team}</TinyText>
                             </Cell>
                             <Cell>
-                              <TinyText onPress={() => alert('Hello world')}>
-                                {item.contact}
+                              <TinyText onPress={emailSend}>
+                                {userEmail}
                               </TinyText>
                             </Cell>
                           </Row>

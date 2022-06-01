@@ -40,6 +40,7 @@ const AddNewFixtures = ({navigation}) => {
     fixture_date: date,
     fixture_time: '14:00',
     fixture_location: location,
+    contact: '',
     id: userUuid,
   };
 
