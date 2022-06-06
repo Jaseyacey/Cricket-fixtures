@@ -4,11 +4,10 @@ import { schema } from './schema';
 
 
 
-const { ClubProfile, Messages, AddFixtures, Teams } = initSchema(schema);
+const { ClubsProfile, Messages, AddFixtures } = initSchema(schema);
 
 export {
-  ClubProfile,
+  ClubsProfile,
   Messages,
-  AddFixtures,
-  Teams
+  AddFixtures
 };

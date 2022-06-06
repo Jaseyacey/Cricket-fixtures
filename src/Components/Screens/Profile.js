@@ -1,9 +1,9 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useId, useState} from 'react';
 import styled from 'styled-components';
 import {DataStore} from '@aws-amplify/datastore';
-import {ClubProfile} from '../../models/index';
+import {ClubsProfile} from '../../models/index';
 import {COLORS} from '../Constants/Colors';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -24,31 +24,33 @@ const Profile = ({navigation}) => {
       teamName: [
         {
           teamName: 'Sunday 1,',
-          // teamName: 'Sunday 2,',
-          // teamName: 'Sunday 3,',
-          // teamName: 'Sunday 4,',
+          teamName2: 'Sunday 2,',
+          teamName3: 'Sunday 3,',
+          teamName4: 'Sunday 4,',
         },
       ],
     };
     let uuid = customerInfo.customerInfo.attributes.sub;
-    DataStore.save(
-      new ClubProfile({
+    await DataStore.save(
+      new ClubsProfile({
         id: uuid,
+        club_description: 'clubDescription',
         club_email: clubEmail,
-        club_name: clubName,
-        club_number: clubPhone,
-        club_description: clubDescription,
-        club_website: clubWebsite,
+        club_name: 'clubName',
+        club_website: 'clubWebsite',
         club_teams: clubTeams,
+        club_number: clubPhone,
       }),
     );
-    console.log('newClub', ClubProfile);
   }
-
   const handleSubmit = () => {
     getClubInfo();
-    console.log('saved', getClubInfo);
-    navigation.navigate('Home');
+    const models = DataStore.query(ClubsProfile).then(data => {
+      console.log('data', data);
+      setNewClub(data);
+      console.log('newClub from QL', newClub);
+      navigation.navigate('Home');
+    });
   };
 
   return (

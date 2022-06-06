@@ -1,7 +1,7 @@
 export const schema = {
     "models": {
-        "ClubProfile": {
-            "name": "ClubProfile",
+        "ClubsProfile": {
+            "name": "ClubsProfile",
             "fields": {
                 "id": {
                     "name": "id",
@@ -31,13 +31,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "club_number": {
-                    "name": "club_number",
-                    "isArray": false,
-                    "type": "AWSPhone",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "club_website": {
                     "name": "club_website",
                     "isArray": false,
@@ -47,9 +40,17 @@ export const schema = {
                 },
                 "club_teams": {
                     "name": "club_teams",
-                    "isArray": false,
+                    "isArray": true,
                     "type": "AWSJSON",
-                    "isRequired": false,
+                    "isRequired": true,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "club_number": {
+                    "name": "club_number",
+                    "isArray": false,
+                    "type": "AWSPhone",
+                    "isRequired": true,
                     "attributes": []
                 },
                 "createdAt": {
@@ -70,7 +71,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "ClubProfiles",
+            "pluralName": "ClubsProfiles",
             "attributes": [
                 {
                     "type": "model",
@@ -82,15 +83,6 @@ export const schema = {
                         "rules": [
                             {
                                 "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            },
-                            {
-                                "allow": "private",
                                 "operations": [
                                     "create",
                                     "update",
@@ -251,19 +243,6 @@ export const schema = {
         }
     },
     "enums": {},
-    "nonModels": {
-        "Teams": {
-            "name": "Teams",
-            "fields": {
-                "Teams": {
-                    "name": "Teams",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                }
-            }
-        }
-    },
-    "version": "0c76473f127d39035484307803bc5cc8"
+    "nonModels": {},
+    "version": "18182dd949623d784428b2b20db3f0a1"
 };

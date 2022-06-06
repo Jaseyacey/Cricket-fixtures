@@ -2,11 +2,5 @@
   "AppSyncApiName": "CricFix",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
-  "AuthModeLastUpdated": "2022-05-30T19:11:59.795Z",
-  "AuthCognitoUserPoolId": {
-    "Fn::GetAtt": [
-      "authCricFix",
-      "Outputs.UserPoolId"
-    ]
-  }
+  "AuthModeLastUpdated": "2022-06-05T16:44:10.414Z"
 }
