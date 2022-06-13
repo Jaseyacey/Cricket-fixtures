@@ -3,7 +3,7 @@
   "serviceConfiguration": {
     "apiName": "CricFix",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "/tmp/amplify-0448fad7-d5fe-44a4-a11a-5d2852c1e4a8/amplify/backend/api/CricFix/schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-75e69208-8837-4fac-b7a7-a517019b367b/amplify/backend/api/CricFix/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
       "keyDescription": "api key description",

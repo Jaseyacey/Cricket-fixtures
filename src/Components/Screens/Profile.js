@@ -1,9 +1,9 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useId, useState} from 'react';
 import styled from 'styled-components';
 import {DataStore} from '@aws-amplify/datastore';
-import {ClubProfile} from '../../models/index';
+import {ClubsProfile} from '../../models/index';
 import {COLORS} from '../Constants/Colors';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -18,37 +18,37 @@ const Profile = ({navigation}) => {
   const [clubDescription, setClubDescription] = useState('');
   const [newClub, setNewClub] = useState('');
   const customerInfo = useSelector(state => state.userProfile);
+  let uuid = customerInfo.customerInfo.attributes.sub;
+  console.log('uuid on Profile', uuid);
 
   async function getClubInfo() {
     let clubTeams = {
       teamName: [
         {
-          teamName: 'Sunday 1,',
-          // teamName: 'Sunday 2,',
-          // teamName: 'Sunday 3,',
-          // teamName: 'Sunday 4,',
+          teamName: teamName,
         },
       ],
     };
-    let uuid = customerInfo.customerInfo.attributes.sub;
-    DataStore.save(
-      new ClubProfile({
+
+    await DataStore.save(
+      new ClubsProfile({
         id: uuid,
-        club_email: clubEmail,
-        club_name: clubName,
-        club_number: clubPhone,
-        club_description: clubDescription,
-        club_website: clubWebsite,
+        club_description: 'clubDescription',
+        club_email: 'clubEmail@clubemail.com',
+        club_name: 'clubName',
+        club_website: 'https://wwww.clubWeasdbsite.com',
         club_teams: clubTeams,
+        club_number: '+447460487029',
       }),
     );
-    console.log('newClub', ClubProfile);
   }
-
   const handleSubmit = () => {
     getClubInfo();
-    console.log('saved', getClubInfo);
-    navigation.navigate('Home');
+    const models = DataStore.query(ClubsProfile).then(data => {
+      setNewClub(data);
+      console.log('data', data);
+      navigation.navigate('Home');
+    });
   };
 
   return (
@@ -110,7 +110,7 @@ const Profile = ({navigation}) => {
           placeholder="Enter teams"
           placeholderTextColor={COLORS.WHITE}
           value={teamName}
-          onChangeText={text => setTeamName(text)}
+          onChangeText={text => setTeamName([text])}
           onValueChange={models => setTeamName(teamName)}
         />
         {/*  CLUB DESCRIPTION */}
