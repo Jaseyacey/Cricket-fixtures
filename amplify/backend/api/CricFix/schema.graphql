@@ -1,4 +1,4 @@
-type ClubsProfile @model @auth(rules: [{allow: public}]) {
+type ClubsProfile @model @auth(rules: [{allow: private}]) {
   id: ID!
   club_description: String!
   club_email: AWSEmail!

@@ -18,37 +18,35 @@ const Profile = ({navigation}) => {
   const [clubDescription, setClubDescription] = useState('');
   const [newClub, setNewClub] = useState('');
   const customerInfo = useSelector(state => state.userProfile);
+  let uuid = customerInfo.customerInfo.attributes.sub;
+  console.log('uuid on Profile', uuid);
 
   async function getClubInfo() {
     let clubTeams = {
       teamName: [
         {
-          teamName: 'Sunday 1,',
-          teamName2: 'Sunday 2,',
-          teamName3: 'Sunday 3,',
-          teamName4: 'Sunday 4,',
+          teamName: teamName,
         },
       ],
     };
-    let uuid = customerInfo.customerInfo.attributes.sub;
+
     await DataStore.save(
       new ClubsProfile({
         id: uuid,
         club_description: 'clubDescription',
-        club_email: clubEmail,
+        club_email: 'clubEmail@clubemail.com',
         club_name: 'clubName',
-        club_website: 'clubWebsite',
+        club_website: 'https://wwww.clubWeasdbsite.com',
         club_teams: clubTeams,
-        club_number: clubPhone,
+        club_number: '+447460487029',
       }),
     );
   }
   const handleSubmit = () => {
     getClubInfo();
     const models = DataStore.query(ClubsProfile).then(data => {
-      console.log('data', data);
       setNewClub(data);
-      console.log('newClub from QL', newClub);
+      console.log('data', data);
       navigation.navigate('Home');
     });
   };
@@ -112,7 +110,7 @@ const Profile = ({navigation}) => {
           placeholder="Enter teams"
           placeholderTextColor={COLORS.WHITE}
           value={teamName}
-          onChangeText={text => setTeamName(text)}
+          onChangeText={text => setTeamName([text])}
           onValueChange={models => setTeamName(teamName)}
         />
         {/*  CLUB DESCRIPTION */}

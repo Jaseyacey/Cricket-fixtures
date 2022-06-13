@@ -34,6 +34,7 @@ const AddNewFixtures = ({navigation}) => {
     console.log(output.date);
     console.log(output.dateString);
   };
+
   let body = {
     away_team: oppoName,
     home_team: homeTeam,
