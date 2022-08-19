@@ -9,10 +9,10 @@ import {useDispatch, useSelector} from 'react-redux';
 
 const Profile = ({navigation}) => {
   const [clubName, setClubName] = useState('');
-  // const [clubEmail, setClubEmail] = useState('');
+  const [clubEmail, setClubEmail] = useState('');
   const [clubPhone, setClubPhone] = useState('+44');
   const [clubLocation, setClubLocation] = useState('');
-  // const [clubWebsite, setClubWebsite] = useState('');
+  const [clubWebsite, setClubWebsite] = useState('');
   const [userUuid, setUserUuid] = useState('');
   const [teamName, setTeamName] = useState({});
   const [clubDescription, setClubDescription] = useState('');
