@@ -9,10 +9,10 @@ import {useDispatch, useSelector} from 'react-redux';
 
 const Profile = ({navigation}) => {
   const [clubName, setClubName] = useState('');
-  const [clubEmail, setClubEmail] = useState('');
-  const [clubPhone, setClubPhone] = useState('');
+  // const [clubEmail, setClubEmail] = useState('');
+  const [clubPhone, setClubPhone] = useState('+44');
   const [clubLocation, setClubLocation] = useState('');
-  const [clubWebsite, setClubWebsite] = useState('');
+  // const [clubWebsite, setClubWebsite] = useState('');
   const [userUuid, setUserUuid] = useState('');
   const [teamName, setTeamName] = useState({});
   const [clubDescription, setClubDescription] = useState('');
@@ -33,22 +33,18 @@ const Profile = ({navigation}) => {
     await DataStore.save(
       new ClubsProfile({
         id: uuid,
-        club_description: 'clubDescription',
-        club_email: 'clubEmail@clubemail.com',
-        club_name: 'clubName',
-        club_website: 'https://wwww.clubWeasdbsite.com',
+        club_description: clubDescription,
+        club_email: clubEmail,
+        club_name: clubName,
+        club_website: 'https://www.google.com',
         club_teams: clubTeams,
-        club_number: '+447460487029',
+        club_number: clubPhone,
       }),
     );
   }
   const handleSubmit = () => {
-    getClubInfo();
-    const models = DataStore.query(ClubsProfile).then(data => {
-      setNewClub(data);
-      console.log('data', data);
-      navigation.navigate('Home');
-    });
+     // console.log('clubs profile', ClubsProfile);
+    navigation.navigate('Home');
   };
 
   return (
